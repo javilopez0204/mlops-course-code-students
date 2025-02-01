@@ -88,3 +88,28 @@ Use linux or MacOS. Alternatively, you can use WSL2 on Windows or Google Colab.
 To use it on Google Colab, open the notebook on the Google Colab interface.
 Upload the model.pkl file to the Colab environment.
 Run the notebook cells.
+
+
+## Model Registry
+
+MLFlow is a model registry that allows you to track and manage models. It is a tool that allows you to manage the full lifecycle of a model, from experimentation to deployment.
+
+First, let's create a new conda environment with the required dependencies.
+
+```bash
+cd model-registry/
+conda create -n model-registry python=3.12
+conda activate model-registry # or source activate model-registry
+pip install -r requirements.txt
+pip install ipykernel
+```
+
+'model-registry/mlflow-basics.ipynb' contains the basic tutorial.
+
+'model-registry/mlflow-training.ipynb' contains the training tutorial.
+
+To run the mlflow server, run the following command:
+
+```bash
+mlflow ui --port 5001 --host 0.0.0.0
+```
