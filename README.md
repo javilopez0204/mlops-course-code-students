@@ -79,7 +79,7 @@ print(response.text)
 Or using the "Try it out" button in the API documentation.
 
 
-## MLServer
+### MLServer
 
 MLServer is a model server that allows you to deploy models in a production environment. It is a high-performance model server that can serve models in real-time.
 MLServer is not compatible with Windows.
