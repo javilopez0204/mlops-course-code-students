@@ -113,3 +113,22 @@ To run the mlflow server, run the following command:
 ```bash
 mlflow ui --port 5001 --host 0.0.0.0
 ```
+
+## Pipelines
+
+Pipelines are a way to automate the machine learning workflow. They allow you to create a sequence of steps that can be executed in a specific order.
+Metaflow is a tool that allows you to create pipelines in Python.
+Currently, there is no support for Windows, so you need to use Linux or MacOS. Alternatively, you can use WSL2 on Windows or Google Colab.
+
+First, let's create a new conda environment with the required dependencies.
+
+```bash
+cd pipelines/
+conda create -n pipelines python=3.12
+conda activate pipelines # or source activate pipelines
+pip install -r requirements.txt
+pip install ipykernel
+```
+
+'pipelines/metaflow-basics.ipynb' contains the basic tutorial.
+'piplines/metaflow-training.ipynb' contains the training exercise.
