@@ -39,3 +39,4 @@ mlruns/
 *.zip
 .metaflow/
 mlartifacts/
+.deepeval_telemetry.txt
