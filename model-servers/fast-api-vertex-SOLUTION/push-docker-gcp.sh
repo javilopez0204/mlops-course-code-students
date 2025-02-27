@@ -28,27 +28,3 @@ docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_URI}
 # Push image to Artifact Registry
 echo "Pushing image to Google Cloud Artifact Registry..."
 docker push ${IMAGE_URI}
-
-# Deploy model to Vertex AI
-echo "Creating Vertex AI Model..."
-gcloud ai models upload \
-  --region=${REGION} \
-  --display-name=${IMAGE_NAME} \
-  --container-image-uri=${IMAGE_URI}
-
-echo "Docker image uploaded and model registered in Vertex AI!"
-
-# Create the endpoint
-gcloud ai endpoints create \
-  --region=us-central1 \
-  --display-name=fastapi-endpoint
-
-# Get endpoint ID after creation
-ENDPOINT_ID=$(gcloud ai endpoints list --region=us-central1 --filter="displayName=fastapi-endpoint" --format="value(name)")
-
-# Deploy model to endpoint
-gcloud ai endpoints deploy-model $ENDPOINT_ID \
-  --model=${MODEL_ID} \
-  --region=us-central1 \
-  --machine-type=n1-standard-4 \
-  --display-name=fastapi-deployment
