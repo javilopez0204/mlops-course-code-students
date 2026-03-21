@@ -25,6 +25,7 @@ model-registry = [
 pipelines = [
     "metaflow==2.13.9",
     "optuna==4.2.0",
+    "matplotlib==3.10.1",
 ]
 vertex = [
     "google-cloud-storage==2.19.0",
