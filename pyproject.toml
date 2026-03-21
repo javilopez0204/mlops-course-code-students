@@ -20,6 +20,7 @@ model-servers = [
 model-registry = [
     "mlflow==3.10.1",
     "optuna==4.2.0",
+    "matplotlib==3.10.1",
 ]
 pipelines = [
     "metaflow==2.13.9",

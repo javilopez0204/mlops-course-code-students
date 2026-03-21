@@ -39,3 +39,6 @@ mlruns/
 *.zip
 .metaflow/
 mlartifacts/
+mlflow.db
+outputs/
+.claude
