@@ -42,3 +42,5 @@ mlartifacts/
 mlflow.db
 outputs/
 .claude
+metaflow_card_cache/
+mjetaflow_trainingflow.py
