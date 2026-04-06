@@ -1,0 +1,46 @@
+# CD Pipeline — triggered on Push to main (merged PRs)
+# Steps: build + push to Artifact Registry + deploy to Cloud Run
+# Only runs when files inside this folder change (configured at trigger level)
+
+steps:
+  # 1. Build the Docker image and tag for Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:$SHORT_SHA'
+      - '.'
+    dir: 'model-servers/fast-api-vertex-cloud-build-SOLUTION'
+    id: 'build'
+
+  # 2. Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:$SHORT_SHA'
+    id: 'push'
+
+  # 3. Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:$SHORT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=8080'
+    id: 'deploy'
+
+substitutions:
+  _REGION: us-central1
+  _REPO_NAME: vertex-repo
+  _IMAGE_NAME: fastapi-app-vertex
+  _SERVICE_NAME: fastapi-app-vertex
+
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

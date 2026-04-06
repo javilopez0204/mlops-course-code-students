@@ -43,4 +43,6 @@ mlflow.db
 outputs/
 .claude
 metaflow_card_cache/
-mjetaflow_trainingflow.py
+metaflow_trainingflow.py
+
+labs/

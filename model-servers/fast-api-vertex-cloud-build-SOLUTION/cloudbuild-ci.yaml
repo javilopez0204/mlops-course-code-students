@@ -1,0 +1,26 @@
+# CI Pipeline — triggered on Pull Requests to main
+# Steps: lint (ruff) + build (docker)
+# Only runs when files inside this folder change (configured at trigger level)
+
+steps:
+  # 1. Lint: install ruff and check the application code
+  - name: 'python:3.12'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'pip install ruff>=0.4 --quiet && ruff check app/'
+    dir: 'model-servers/fast-api-vertex-cloud-build-SOLUTION'
+    id: 'lint'
+
+  # 2. Build: validate the Docker image compiles (does NOT push)
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'fastapi-app-vertex:$SHORT_SHA'
+      - '.'
+    dir: 'model-servers/fast-api-vertex-cloud-build-SOLUTION'
+    id: 'build'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
