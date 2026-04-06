@@ -7,7 +7,7 @@ app = FastAPI()
 # GET: Root path
 @app.get("/")
 async def root():
-    return {"message": "Hello classroom! Welcome to FastAPI."}
+    return {"message": "Hello UV."}
 
 # GET: Example of a path parameter
 @app.get("/users/{user_id}")
