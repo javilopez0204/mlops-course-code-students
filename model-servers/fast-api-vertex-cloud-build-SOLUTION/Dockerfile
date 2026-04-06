@@ -7,7 +7,7 @@ COPY requirements.txt /app
 RUN pip install -r requirements.txt
 
 COPY app /app
-COPY model.pkl /app
+#COPY model.pkl /app
 
 EXPOSE 8080
 
