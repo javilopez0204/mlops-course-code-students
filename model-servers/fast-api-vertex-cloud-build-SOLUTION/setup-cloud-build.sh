@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 # ============================================================
 # Cloud Build Setup Script
