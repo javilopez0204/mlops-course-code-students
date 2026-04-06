@@ -115,3 +115,19 @@ echo "    CD trigger: runs on Push to main (build + push + deploy)"
 echo ""
 echo "    Artifact Registry: ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}"
 echo "    Cloud Run service will be created on first deploy."
+
+
+# ============================================================
+# Step 7: ruff check the application code
+# ============================================================
+# Check for lint errors
+uv run ruff check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+
+# Auto-fix what ruff can fix automatically
+uv run ruff check --fix model-servers/fast-api-vertex-cloud-build-SOLUTION/
+
+# Check formatting (ruff also replaces black)
+uv run ruff format --check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+
+# Apply formatting
+uv run ruff format model-servers/fast-api-vertex-cloud-build-SOLUTION/

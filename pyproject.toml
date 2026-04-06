@@ -10,6 +10,11 @@ dependencies = [
     "ipykernel",
 ]
 
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.4",
+]
+
 [project.optional-dependencies]
 model-servers = [
     "mlserver==1.7.1",
