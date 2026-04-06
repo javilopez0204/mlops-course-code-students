@@ -1,24 +1,63 @@
 # MLOps course code repository
 
+## Prerequisites
+
+### Install uv
+
+**macOS / Linux:**
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell):**
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+After installing, restart your terminal so the `uv` command is available.
+
+### Install dependencies
+
+Install the core dependencies:
+
+```bash
+uv sync
+```
+
+Install a specific module (e.g. model-servers):
+
+```bash
+uv sync --extra model-servers
+```
+
+Install everything except Vertex AI:
+
+```bash
+uv sync --extra all
+```
+
+Install with Vertex AI (requires GCP credentials):
+
+```bash
+uv sync --extra all --extra vertex
+```
+
+> **Note:** Vertex AI is kept as a separate extra because it pulls in GCP-specific
+> dependencies that are only needed if you are deploying to Google Cloud.
+
+---
+
 ## Model servers
 
 ### FastAPI
 
-A pre-requisite is to create a conda environment with the required dependencies. The `requirements.txt` file contains the dependencies.
-
-```bash
-cd model-servers/
-conda create -n model-servers python=3.12
-conda activate model-servers # or source activate model-servers
-pip install -r requirements.txt
-pip install ipykernel
-```
-
 #### Fast-api-tutorial
 
 ```bash
-cd fast-api-tutorial/
-python app/app.py
+cd model-servers/fast-api-tutorial/
+uv run python app/app.py
 ```
 
 Now the FastAPI server is running on `http://localhost:8000`.
@@ -78,57 +117,47 @@ print(response.text)
 
 Or using the "Try it out" button in the API documentation.
 
-
 ### MLServer
 
 MLServer is a model server that allows you to deploy models in a production environment. It is a high-performance model server that can serve models in real-time.
 MLServer is not compatible with Windows.
-Use linux or MacOS. Alternatively, you can use WSL2 on Windows or Google Colab.
+Use Linux or macOS. Alternatively, you can use WSL2 on Windows or Google Colab.
 
 To use it on Google Colab, open the notebook on the Google Colab interface.
 Upload the model.pkl file to the Colab environment.
 Run the notebook cells.
 
+---
 
 ## Model Registry
 
 MLFlow is a model registry that allows you to track and manage models. It is a tool that allows you to manage the full lifecycle of a model, from experimentation to deployment.
 
-First, let's create a new conda environment with the required dependencies.
-
 ```bash
-cd model-registry/
-conda create -n model-registry python=3.12
-conda activate model-registry # or source activate model-registry
-pip install -r requirements.txt
-pip install ipykernel
+uv sync --extra model-registry
 ```
 
-'model-registry/mlflow-basics.ipynb' contains the basic tutorial.
+`model-registry/mlflow-basics.ipynb` contains the basic tutorial.
 
-'model-registry/mlflow-training.ipynb' contains the training tutorial.
+`model-registry/mlflow-training.ipynb` contains the training tutorial.
 
-To run the mlflow server, run the following command:
+To run the MLflow server:
 
 ```bash
-mlflow ui --port 5001 --host 0.0.0.0
+uv run mlflow ui --port 5001 --host 0.0.0.0
 ```
+
+---
 
 ## Pipelines
 
 Pipelines are a way to automate the machine learning workflow. They allow you to create a sequence of steps that can be executed in a specific order.
 Metaflow is a tool that allows you to create pipelines in Python.
-Currently, there is no support for Windows, so you need to use Linux or MacOS. Alternatively, you can use WSL2 on Windows or Google Colab.
-
-First, let's create a new conda environment with the required dependencies.
+Currently, there is no support for Windows, so you need to use Linux or macOS. Alternatively, you can use WSL2 on Windows or Google Colab.
 
 ```bash
-cd pipelines/
-conda create -n pipelines python=3.12
-conda activate pipelines # or source activate pipelines
-pip install -r requirements.txt
-pip install ipykernel
+uv sync --extra pipelines
 ```
 
-'pipelines/metaflow-basics.ipynb' contains the basic tutorial.
-'piplines/metaflow-training.ipynb' contains the training exercise.
+`pipelines/metaflow-basics.ipynb` contains the basic tutorial.
+`pipelines/metaflow-model-training.ipynb` contains the training exercise.
