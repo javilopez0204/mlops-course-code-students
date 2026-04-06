@@ -87,6 +87,7 @@ gcloud builds triggers create github \
     --repo-name="$GITHUB_REPO" \
     --repo-owner="$GITHUB_OWNER" \
     --pull-request-pattern="^main$" \
+    --comment-control=COMMENTS_DISABLED \
     --build-config="model-servers/fast-api-vertex-cloud-build-SOLUTION/cloudbuild-ci.yaml" \
     --included-files="model-servers/fast-api-vertex-cloud-build-SOLUTION/**" \
     --service-account="projects/${PROJECT_ID}/serviceAccounts/${CB_SA_EMAIL}" \
