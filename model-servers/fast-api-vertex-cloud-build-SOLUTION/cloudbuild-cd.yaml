@@ -35,7 +35,7 @@ steps:
 
 substitutions:
   _REGION: us-central1
-  _REPO_NAME: vertex-repo
+  _REPO_NAME: mlops-course-images
   _IMAGE_NAME: fastapi-app-vertex
   _SERVICE_NAME: fastapi-app-vertex
 
