@@ -17,7 +17,10 @@ except Exception as e:
     print(f"Error loading model: {e}")
 
     # Create a default model mock
-    model = {"predict": [0, 1, 2]}
+    class MockModel:
+        def predict(self, inputs):
+            return [0, 1, 2]
+    model = MockModel()
     print("Using default model mock")
 
 # Initialize FastAPI app
