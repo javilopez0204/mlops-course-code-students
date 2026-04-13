@@ -116,18 +116,71 @@ echo ""
 echo "    Artifact Registry: ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}"
 echo "    Cloud Run service will be created on first deploy."
 
+# ============================================================
+# TEARDOWN — run manually to remove all created resources
+# Usage: bash setup-cloud-build.sh teardown
+# ============================================================
+SERVICE_NAME="fastapi-app-vertex"
+
+teardown() {
+    echo "==> WARNING: This will delete all resources created by this script."
+    read -p "    Are you sure? (yes/no): " CONFIRM
+    [[ "$CONFIRM" != "yes" ]] && echo "Aborted." && exit 0
+
+    echo "==> Deleting Cloud Build triggers..."
+    gcloud builds triggers delete "ci-lint-and-build" \
+        --region="$REGION" --project="$PROJECT_ID" --quiet 2>/dev/null \
+        || echo "    (ci-lint-and-build not found, skipping)"
+
+    gcloud builds triggers delete "cd-build-and-deploy" \
+        --region="$REGION" --project="$PROJECT_ID" --quiet 2>/dev/null \
+        || echo "    (cd-build-and-deploy not found, skipping)"
+
+    echo "==> Deleting Cloud Run service '${SERVICE_NAME}'..."
+    gcloud run services delete "$SERVICE_NAME" \
+        --region="$REGION" --project="$PROJECT_ID" --quiet 2>/dev/null \
+        || echo "    (service not found, skipping)"
+
+    echo "==> Deleting Artifact Registry repository '${REPO_NAME}'..."
+    gcloud artifacts repositories delete "$REPO_NAME" \
+        --location="$REGION" --project="$PROJECT_ID" --quiet 2>/dev/null \
+        || echo "    (repository not found, skipping)"
+
+    echo "==> Revoking IAM roles from service account '${CB_SA_EMAIL}'..."
+    for ROLE in "roles/run.admin" "roles/iam.serviceAccountUser" "roles/artifactregistry.writer" "roles/logging.logWriter"; do
+        gcloud projects remove-iam-policy-binding "$PROJECT_ID" \
+            --member="serviceAccount:${CB_SA_EMAIL}" \
+            --role="$ROLE" \
+            --quiet 2>/dev/null || true
+    done
+
+    echo "==> Deleting service account '${CB_SA_NAME}'..."
+    gcloud iam service-accounts delete "$CB_SA_EMAIL" \
+        --project="$PROJECT_ID" --quiet 2>/dev/null \
+        || echo "    (service account not found, skipping)"
+
+    echo ""
+    echo "==> Teardown complete."
+    echo "    Note: GCP APIs were NOT disabled. Disable manually if needed:"
+    echo "    gcloud services disable cloudbuild.googleapis.com artifactregistry.googleapis.com run.googleapis.com --project=${PROJECT_ID}"
+}
+
+if [[ "${1:-}" == "teardown" ]]; then
+    teardown
+fi
 
 # ============================================================
-# Step 7: ruff check the application code
+# LINTING EXAMPLES — copy and paste these commands manually
 # ============================================================
+
 # Check for lint errors
-uv run ruff check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff check model-servers/fast-api-vertex-cloud-build-SOLUTION/
 
 # Auto-fix what ruff can fix automatically
-uv run ruff check --fix model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff check --fix model-servers/fast-api-vertex-cloud-build-SOLUTION/
 
 # Check formatting (ruff also replaces black)
-uv run ruff format --check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff format --check model-servers/fast-api-vertex-cloud-build-SOLUTION/
 
 # Apply formatting
-uv run ruff format model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff format model-servers/fast-api-vertex-cloud-build-SOLUTION/

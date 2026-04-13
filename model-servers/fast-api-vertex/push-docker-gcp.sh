@@ -8,7 +8,7 @@
 # === CONFIGURABLE VARIABLES ===
 PROJECT_ID="your-project-id"  # Replace with your Google Cloud project ID
 REGION="us-central1"  # Change if deploying to a different region
-REPO_NAME="vertex-repo"  # Artifact Registry repository name
+REPO_NAME="mlops-course-images"  # Artifact Registry repository name
 IMAGE_NAME="fastapi-app-vertex"
 TAG="latest"
 
