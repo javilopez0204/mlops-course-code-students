@@ -2,7 +2,7 @@
 name = "mlops-course-code"
 version = "0.1.0"
 description = "MLOps course: model servers, model registry, pipelines, and Vertex AI"
-requires-python = ">=3.12"
+requires-python = "==3.12.*"
 dependencies = [
     "pandas==2.2.3",
     "numpy>=1.26.4",
