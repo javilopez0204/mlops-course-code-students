@@ -1,7 +1,8 @@
-mlserver==1.7.1
-mlserver-sklearn==1.7.1
+#mlserver==1.7.1
+#mlserver-sklearn==1.7.1
 pandas==2.2.3
 numpy==1.26.4
 scikit-learn==1.6.1
 fastapi>=0.115
 requests==2.32.3
+uvicorn
