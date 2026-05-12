@@ -9,7 +9,7 @@ steps:
     args:
       - '-c'
       - 'pip install ruff>=0.4 --quiet && ruff check app/'
-    dir: 'model-servers/fast-api-vertex-cloud-build-SOLUTION'
+    dir: 'model-servers/fast-api-vertex-cloud-build'
     id: 'lint'
 
   # 2. Build: validate the Docker image compiles (does NOT push)
@@ -19,7 +19,7 @@ steps:
       - '-t'
       - 'fastapi-app-vertex:$SHORT_SHA'
       - '.'
-    dir: 'model-servers/fast-api-vertex-cloud-build-SOLUTION'
+    dir: 'model-servers/fast-api-vertex-cloud-build'
     id: 'build'
 
 options:
