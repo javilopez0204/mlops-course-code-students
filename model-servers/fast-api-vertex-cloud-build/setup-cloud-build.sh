@@ -70,7 +70,7 @@ echo " MANUAL STEP: Connect your GitHub repository to Cloud Build"
 echo "============================================================"
 echo ""
 echo " 1. Go to: https://console.cloud.google.com/cloud-build/triggers;region=${REGION}?project=${PROJECT_ID}"
-echo " 2. Click 'CONNECT REPOSITORY' (2nd gen)"
+echo " 2. Click 'CONNECT REPOSITORY' (1st gen)"
 echo " 3. Select GitHub and authenticate"
 echo " 4. Choose repository: ${GITHUB_OWNER}/${GITHUB_REPO}"
 echo " 5. Complete the connection"
@@ -87,8 +87,8 @@ gcloud builds triggers create github \
     --repo-owner="$GITHUB_OWNER" \
     --pull-request-pattern="^main$" \
     --comment-control=COMMENTS_DISABLED \
-    --build-config="model-servers/fast-api-vertex-cloud-build-SOLUTION/cloudbuild-ci.yaml" \
-    --included-files="model-servers/fast-api-vertex-cloud-build-SOLUTION/**" \
+    --build-config="model-servers/fast-api-vertex-cloud-build/cloudbuild-ci.yaml" \
+    --included-files="model-servers/fast-api-vertex-cloud-build/**" \
     --service-account="projects/${PROJECT_ID}/serviceAccounts/${CB_SA_EMAIL}" \
     --region="$REGION" \
     --project="$PROJECT_ID"
@@ -102,8 +102,8 @@ gcloud builds triggers create github \
     --repo-name="$GITHUB_REPO" \
     --repo-owner="$GITHUB_OWNER" \
     --branch-pattern="^main$" \
-    --build-config="model-servers/fast-api-vertex-cloud-build-SOLUTION/cloudbuild-cd.yaml" \
-    --included-files="model-servers/fast-api-vertex-cloud-build-SOLUTION/**" \
+    --build-config="model-servers/fast-api-vertex-cloud-build/cloudbuild-cd.yaml" \
+    --included-files="model-servers/fast-api-vertex-cloud-build/**" \
     --service-account="projects/${PROJECT_ID}/serviceAccounts/${CB_SA_EMAIL}" \
     --region="$REGION" \
     --project="$PROJECT_ID"
@@ -174,13 +174,13 @@ fi
 # ============================================================
 
 # Check for lint errors
-# uv run ruff check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff check model-servers/fast-api-vertex-cloud-build/
 
 # Auto-fix what ruff can fix automatically
-# uv run ruff check --fix model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff check --fix model-servers/fast-api-vertex-cloud-build/
 
 # Check formatting (ruff also replaces black)
-# uv run ruff format --check model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff format --check model-servers/fast-api-vertex-cloud-build/
 
 # Apply formatting
-# uv run ruff format model-servers/fast-api-vertex-cloud-build-SOLUTION/
+# uv run ruff format model-servers/fast-api-vertex-cloud-build/

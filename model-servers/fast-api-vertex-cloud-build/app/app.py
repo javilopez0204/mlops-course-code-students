@@ -1,5 +1,5 @@
 # FastAPI model server for Iris dataset
-# Path: model-servers/fast-api-vertex-cloud-build-SOLUTION/app/app.py
+# Path: model-servers/fast-api-vertex-cloud-build/app/app.py
 # Run with: uvicorn app:app --reload
 
 import os
