@@ -6,7 +6,7 @@
 # gcloud services enable artifactregistry.googleapis.com aiplatform.googleapis.com
 
 # === CONFIGURABLE VARIABLES ===
-PROJECT_ID="your-project-id"  # Replace with your Google Cloud project ID
+PROJECT_ID="pruebaedem"  # Replace with your Google Cloud project ID
 REGION="us-central1"  # Change if deploying to a different region
 REPO_NAME="vertex-repo"  # Artifact Registry repository name
 IMAGE_NAME="fastapi-app-vertex"
