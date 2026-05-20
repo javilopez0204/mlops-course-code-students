@@ -27,6 +27,7 @@ except Exception as e:
 # Initialize FastAPI app
 app = FastAPI()
 print("HOla buenos dias Javitobirras")
+print("Model loaded successfully, ready to serve predictions")
 
 # Define environment variables with defaults
 HEALTH_ROUTE = os.getenv("AIP_HEALTH_ROUTE", "/health")
